@@ -1,0 +1,15 @@
+{
+    "name": "aws_waf",
+    "type": "python",
+    "clazz": "",
+    "label": "AWS WAF",
+    "native": false,
+    "testUrl": "",
+    "category": "Data Enrichment and Threat Intelligence",
+    "functions": [],
+    "isLicensed": true,
+    "pathToLogo": "",
+    "encodedLogo": "",
+    "connectionParameters": [],
+    "isMultiAuthentication": false
+}
