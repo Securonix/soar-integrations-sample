@@ -16,43 +16,23 @@ class MyFirstIntegration():
         serverurl = request.connectionParameters['serverurl']
         domain = request.connectionParameters['domain']
         addwatchlistname = request.parameters['addwatchlistname']
-        containerdata = request.parameters['containerdata']
-  # Step 1: Extract parameters from containerdata
+        containerdata = request.parameters['container']
         if containerdata:
             tenant_name = containerdata.get('tenantname')
-            entity_type = containerdata.get('entityType')
+            entity_type = containerdata.get('violator')
             resource_group_id = containerdata.get('resourcegroupid')
             entity_id = containerdata.get('entityId')
-
             if all([tenant_name, entity_type, resource_group_id, entity_id]):
-                # Step 2: Get Token
                 token_url = f'{serverurl}/ws/token/generate'
                 auth = (username, password)
-
                 try:
-                    # Make a POST request to generate the token
                     token_response = requests.post(token_url, auth=auth)
-                    token_response.raise_for_status()  # Check for HTTP errors
-
-                    # Extract the token from the response
+                    token_response.raise_for_status()
                     token = token_response.json().get('token')
-
-                    # Step 3: Add to Watchlist
                     add_to_watchlist_url = f'{serverurl}/ws/incident/addToWatchlist'
-                    watchlist_params = {
-                        'tenantname': tenant_name,
-                        'entityType': entity_type,
-                        'watchlistname': addwatchlistname,
-                        'expirydays': 10,
-                        'resourcegroupid': resource_group_id,
-                        'entityId': entity_id
-                    }
-
-                    # Make a POST request to add to the watchlist
+                    watchlist_params = {'tenantname': tenant_name, 'entityType': entity_type, 'watchlistname': addwatchlistname, 'expirydays': 10, 'resourcegroupid': resource_group_id, 'entityId': entity_id}
                     watchlist_response = requests.post(add_to_watchlist_url, headers={'token': token}, params=watchlist_params)
-                    watchlist_response.raise_for_status()  # Check for HTTP errors
-
-                    # Return the full response content
+                    watchlist_response.raise_for_status()
                     return watchlist_response.json()
                 except requests.exceptions.RequestException as e:
                     return {'Status': 'Error', 'Message': f'Failed to complete the operation: {str(e)}'}
@@ -67,54 +47,45 @@ class MyFirstIntegration():
         serverurl = request.connectionParameters['serverurl']
         domain = request.connectionParameters['domain']
         createwatchlistname = request.parameters['createwatchlistname']
-        # Step 1: Generate Token
         token_url = f'{serverurl}/ws/token/generate'
-        auth = (username, password)
-
+        headers = {
+         'username': username,
+         'password': password,
+        }
+        print(token_url)
         try:
-            # Make a POST request to generate the token
-            token_response = requests.post(token_url, auth=auth)
-            token_response.raise_for_status()  # Check for HTTP errors
-
-            # Extract the token from the response
-            token = token_response.json().get('token')
-
-            # Step 2: Create Watchlist
+            token_response = requests.get(token_url,headers=headers)
+            token = token_response.text.strip()
+            print("Token Response Content:", token)
             if createwatchlistname:
                 create_watchlist_url = f'{serverurl}/ws/incident/createWatchlist'
-                watchlist_params = {
-                    'watchlistname': createwatchlistname,
-                    'tenantname': '64april_r2_mssp',  # You may need to adjust this value
-                    'token': token
-                }
-
-                # Make a POST request to create the watchlist
+                watchlist_params = {'watchlistname': createwatchlistname, 'tenantname': '64april_r2_mssp', 'token': token}
                 watchlist_response = requests.post(create_watchlist_url, params=watchlist_params)
-                watchlist_response.raise_for_status()  # Check for HTTP errors
-
-                # Handle the watchlist creation response as needed
-                watchlist_status = watchlist_response.json().get('Status')
-
-                return {'Status': watchlist_response.json()}
+                watchlist_response.raise_for_status()
+                watchlist_status = watchlist_response.text
+                return {'Status': 'Success', 'Message': watchlist_status}
             else:
                 return {'Status': 'Error', 'Message': 'Watchlist name is missing'}
-
         except requests.exceptions.RequestException as e:
             return {'Status': 'Error', 'Message': f'Failed to complete the operation: {str(e)}'}
 
+    def RemoveWatchlist(self, request: RequestBody) -> ResponseBody:
+        username = request.connectionParameters['username']
+        password = request.connectionParameters['password']
+        serverurl = request.connectionParameters['serverurl']
+        domain = request.connectionParameters['domain']
+        ORG = request.connectionParameters['ORG']
+        createwatchlistname = request.parameters['createwatchlistname']
+        'implement your custom logic for action handling here'
+        return {'Status': ''}
 
     def test_connection(self, connectionParameters: dict):
         username = connectionParameters['username']
         password = connectionParameters['password']
         serverurl = connectionParameters['serverurl']
         domain = connectionParameters['domain']
+        ORG = connectionParameters['ORG']
         try:
-            response = requests.get(serverurl, auth=(username, password))
-            response.raise_for_status() 
-
-            if response.status_code == 200:
-              return 'Connection Successful'
-            else:
-                raise Exception(f"Connection failed with status code {response.status_code}")
-        except requests.exceptions.RequestException as e:
-            raise Exception(f"Failed to establish connection: {str(e)}")
+            return 'Connection Successful'
+        except Exception as e:
+            raise Exception(str(e))
