@@ -28,20 +28,20 @@ class AwsWaf():
         
 
     def update_ip_set(self, request: RequestBody) -> ResponseBody:
-        access_key = request.connectionParameters['access_key']
-        secret_key = request.connectionParameters['secret_key']
-        region = request.connectionParameters['region']
-        id = request.parameters['id']
-        name = request.parameters['name']
-        scope = request.parameters['scope']
-        addresses = request.parameters['addresses']
-        if isinstance(addresses[0], str):
-            addresses = addresses[0].replace(' ', '').split(',')
-        else :
-            addresses = addresses[0]
-        addresses = list(map(lambda ip: ip + '/32', addresses))
-        resp = {}
         try:
+            access_key = request.connectionParameters['access_key']
+            secret_key = request.connectionParameters['secret_key']
+            region = request.connectionParameters['region']
+            id = request.parameters['id']
+            name = request.parameters['name']
+            scope = request.parameters['scope']
+            addresses = request.parameters['addresses']
+            if isinstance(addresses[0], str):
+                addresses = addresses[0].replace(' ', '').split(',')
+            else :
+                addresses = addresses[0]
+            addresses = list(map(lambda ip: ip + '/32', addresses))
+            resp = {}
             self.client = boto3.client('wafv2', aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=region)
             ipSetResp = self.client.get_ip_set(Name=name, Scope=scope, Id=id)
             print(ipSetResp)

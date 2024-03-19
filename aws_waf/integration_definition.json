@@ -16,7 +16,7 @@
             "desc": "The secret key for the provided access key",
             "type": "String",
             "values": [],
-            "isSecret": false,
+            "isSecret": true,
             "optional": false,
             "encrypted": false
         },
