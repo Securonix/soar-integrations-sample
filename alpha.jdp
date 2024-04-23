@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Trigger soar-integration-execution-py-service Pipeline') {
             steps {
