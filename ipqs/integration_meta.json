@@ -1,7 +1,7 @@
 {
     "name": "ipqs",
     "type": "python",
-    "clazz": "app.ipqs",
+    "clazz": "",
     "label": "IPQS",
     "native": false,
     "testUrl": "",
