@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="merakiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#78BE20;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5BA300;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#merakiGradient)"/>
+  
+  <!-- Meraki cloud icon -->
+  <g transform="translate(100, 100)">
+    <!-- Cloud shape -->
+    <path d="M -35,-15 Q -45,-15 -45,-25 Q -45,-35 -35,-35 Q -30,-45 -15,-45 Q 0,-45 5,-35 Q 15,-35 15,-25 Q 15,-15 5,-15 Z" 
+          fill="white" opacity="0.9"/>
+    
+    <!-- Network nodes -->
+    <circle cx="-25" cy="0" r="4" fill="white"/>
+    <circle cx="0" cy="0" r="4" fill="white"/>
+    <circle cx="25" cy="0" r="4" fill="white"/>
+    
+    <!-- Connection lines -->
+    <line x1="-25" y1="0" x2="0" y2="0" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="0" x2="25" y2="0" stroke="white" stroke-width="2"/>
+    
+    <!-- Bottom nodes -->
+    <circle cx="-25" cy="25" r="3" fill="white"/>
+    <circle cx="0" cy="25" r="3" fill="white"/>
+    <circle cx="25" cy="25" r="3" fill="white"/>
+    
+    <!-- Vertical connections -->
+    <line x1="-25" y1="0" x2="-25" y2="25" stroke="white" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="25" stroke="white" stroke-width="1.5"/>
+    <line x1="25" y1="0" x2="25" y2="25" stroke="white" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Cisco Meraki text -->
+  <text x="100" y="165" font-family="Arial, sans-serif" font-size="16" font-weight="bold" 
+        text-anchor="middle" fill="white">CISCO</text>
+  <text x="100" y="182" font-family="Arial, sans-serif" font-size="14" 
+        text-anchor="middle" fill="white">Meraki</text>
+</svg>
