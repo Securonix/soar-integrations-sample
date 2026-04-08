@@ -9,9 +9,6 @@ class StellarCyber():
 
     def __init__(self) -> None:
         self.logger = logging.getLogger()
-        self._jwt_token = None
-        self._base_url = None
-        self._api_token = None
 
     # -------------------------------
     # Internal helpers
@@ -23,15 +20,6 @@ class StellarCyber():
         else:
             headers = {"Authorization": f"Bearer {api_token}"}
             resp = requests.post(url, headers=headers, timeout=30)
-    def _init_connection(self, connectionParameters: dict):
-        self._base_url = connectionParameters['base_url'].rstrip('/')
-        self._api_token = connectionParameters['api_token']
-        self._get_access_token()
-
-    def _get_access_token(self):
-        url = f"{self._base_url}/connect/api/v1/access_token"
-        headers = {"Authorization": f"Bearer {self._api_token}"}
-        resp = requests.post(url, headers=headers)
         resp.raise_for_status()
         data = resp.json()
         token = data.get("access_token")
